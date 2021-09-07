@@ -1,2 +1,2 @@
-# OurSpace
-Simple Social Network
+# ourspace-server
+OurSpace Social Network Server
