@@ -1,2 +1,1 @@
-# OurSpace
-Simple Social Network
+Revature Social Network
