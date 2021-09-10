@@ -1,12 +1,11 @@
 package com.revature.ourspaceserver.controller;
 
 import com.revature.ourspaceserver.model.JsonResponse;
+import com.revature.ourspaceserver.model.Like;
+import com.revature.ourspaceserver.model.Post;
 import com.revature.ourspaceserver.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController("likeController")
 @RequestMapping("/api")
@@ -20,7 +19,12 @@ public class LikeController {
     }
 
     @GetMapping("like")
-    public JsonResponse getAllPosts() {
+    public JsonResponse getAllLikes() {
         return new JsonResponse(true, "listing all likes", this.likeService.getAllLikes());
+    }
+
+    @PostMapping("like")
+    public JsonResponse createLike(@RequestBody Like like) {
+        return new JsonResponse(true, "Like successfully created", this.likeService.createLike(like));
     }
 }

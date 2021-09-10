@@ -1,12 +1,10 @@
 package com.revature.ourspaceserver.controller;
 
+import com.revature.ourspaceserver.model.Comment;
 import com.revature.ourspaceserver.model.JsonResponse;
 import com.revature.ourspaceserver.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController("commentController")
 @RequestMapping("/api")
@@ -22,5 +20,10 @@ public class CommentController {
     @GetMapping("comment")
     public JsonResponse getAllComments() {
         return new JsonResponse(true, "listing all comments", this.commentService.getAllComments());
+    }
+
+    @PostMapping("comment")
+    public JsonResponse createComment(@RequestBody Comment comment) {
+        return new JsonResponse(true, "Comment successfully created", this.commentService.createComment(comment));
     }
 }

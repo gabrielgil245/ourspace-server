@@ -13,24 +13,18 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @Entity
 @Table(name="comments")
-@AssociationOverrides({
-        @AssociationOverride(name="primaryKey.user",
-        joinColumns = @JoinColumn(name="user_id")),
-        @AssociationOverride(name="primaryKey.post",
-        joinColumns = @JoinColumn(name="post_id"))
-})
 public class Comment {
-    //Composite key
-    @EmbeddedId
-    private CompositeKey primaryKey = new CompositeKey();
-    @Transient
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="comment_id")
+    private Integer commentId;
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
-    @Transient
+    @ManyToOne(cascade = CascadeType.ALL)
     private Post post;
     @Column(name="comment_descr", nullable = false)
     private String commentDescr;
     @CreationTimestamp
     @Column(name="comment_submitted", nullable = false)
     private Timestamp commentSubmitted;
-
 }
