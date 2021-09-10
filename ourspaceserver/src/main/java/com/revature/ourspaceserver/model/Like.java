@@ -11,17 +11,13 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "likes")
-@AssociationOverrides({
-        @AssociationOverride(name = "primaryKey.user",
-        joinColumns = @JoinColumn(name = "user_id")),
-        @AssociationOverride(name = "primaryKey.post",
-        joinColumns = @JoinColumn(name = "post_id"))
-})
 public class Like {
-    @EmbeddedId
-    private CompositeKey primaryKey = new CompositeKey();
-    @Transient
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="like_id")
+    private Integer likeId;
+    @ManyToOne(cascade = CascadeType.ALL)
     private User user;
-    @Transient
+    @ManyToOne(cascade = CascadeType.ALL)
     private Post post;
 }

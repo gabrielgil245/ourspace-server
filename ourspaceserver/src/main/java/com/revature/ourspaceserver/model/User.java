@@ -33,11 +33,4 @@ public class User {
     private String aboutMe;
     @Column(name="profile_pic")
     private String profilePic;
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Post> posts = new ArrayList<>();
-    @OneToMany(mappedBy = "primaryKey.user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Like> likes = new HashSet<>();
-    @OneToMany(mappedBy = "primaryKey.user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Comment> comments = new HashSet<>();
 }
