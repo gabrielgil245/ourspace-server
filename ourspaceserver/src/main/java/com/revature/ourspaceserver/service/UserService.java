@@ -16,13 +16,9 @@ public class UserService {
         this.userDao = userDao;
     }
 
-    public List<User> getAllUsers() {
-        return this.userDao.findAll();
-    }
+    public List<User> getAllUsers() { return this.userDao.findAll(); }
 
-    public User getUserById(Integer id) {
-        return this.userDao.findById(id).orElse(null);
-    }
+    public User getUserById(Integer id) { return this.userDao.findById(id).orElse(null); }
 
     public User getUserByUsername(String username) {
         return this.userDao.findUserByUsername(username);
@@ -33,9 +29,9 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        User temp = getUserByUsername(user.getUsername());
+        User temp = this.userDao.findUserByUsername(user.getUsername());
         if(temp != null) return null;
-        temp = getUserByEmail(user.getEmail());
+        temp = this.userDao.findUserByEmail(user.getEmail());
         if(temp != null) return null;
         return this.userDao.save(user);
     }
