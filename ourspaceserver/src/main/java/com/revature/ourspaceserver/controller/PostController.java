@@ -28,4 +28,14 @@ public class PostController {
     public JsonResponse createPost(@RequestBody Post post) {
         return new JsonResponse(true, "Post successfully created", this.postService.createPost(post));
     }
+
+    @GetMapping("post/{userId}")
+    public List<Post> getAllPostsByUser(@PathVariable Integer userId) {
+        return this.postService.getAllPostsByUser(userId);
+    }
+
+    @GetMapping("post/")
+    public List<Post> getPostsByPageNumber(@RequestParam Integer pageNumber) {
+        return this.postService.getPostsByPageNumber(pageNumber);
+    }
 }
