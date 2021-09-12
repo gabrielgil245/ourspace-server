@@ -152,4 +152,46 @@ class UserServiceTest {
         assertEquals(expectedResult, actualResult);
         Mockito.verify(userDao, Mockito.times(0)).save(user);
     }
+
+    @Test
+    void resetUserPasswordSuccessful() {
+        //Assign
+        String email = "test@test.com";
+        String oldPassword = "old";
+        String newPassword = "new";
+        User beforeUpdate = new User(1, "jwick", oldPassword, "John", "Wick",
+                "test@test.com", null, null, null);
+        User expectedResult = new User(1, "jwick", newPassword, "John", "Wick",
+                "test@test.com", null, null, null);
+        Mockito.when(userDao.save(expectedResult)).thenReturn(expectedResult);
+
+        //Act
+        User actualResult = this.userService.resetUserPassword(expectedResult);
+
+        //Assert
+        assertEquals(expectedResult, actualResult);
+        //Verify
+        Mockito.verify(userDao, Mockito.times(1)).save(expectedResult);
+    }
+
+    @Test
+    void resetUserPasswordFailure() {
+        //Assign
+        String email = "test@test.com";
+        String oldPassword = "old";
+        String newPassword = "new";
+        User beforeUpdate = new User(1, "jwick", oldPassword, "John", "Wick",
+                "test@test.com", null, null, null);
+        User expectedResult = new User(1, "jwick", newPassword, "John", "Wick",
+                "test@test.com", null, null, null);
+        Mockito.when(userDao.save(expectedResult)).thenReturn(beforeUpdate);
+
+        //Act
+        User actualResult = this.userService.resetUserPassword(expectedResult);
+
+        //Assert
+        assertNotEquals(expectedResult, actualResult);
+        //Verify
+        Mockito.verify(userDao, Mockito.times(1)).save(expectedResult);
+    }
 }
