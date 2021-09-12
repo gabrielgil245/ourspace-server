@@ -29,4 +29,15 @@ public class PostService {
         post.setUser(user);
         return this.postDao.save(post);
     }
+
+    public List<Post> getAllPostsByUser(Integer userId) {
+        User user = this.userDao.findById(userId).orElse(null);
+        return this.postDao.findPostByUser(user);
+    }
+
+    public List<Post> getPostsByPageNumber(Integer pageNumber) {
+        Integer postIdStart = 0 + ((pageNumber - 1) * 20);
+        Integer postIdEnd = 21 + ((pageNumber - 1) * 20);
+        return this.postDao.retrievePostByPageNumber(postIdStart, postIdEnd);
+    }
 }

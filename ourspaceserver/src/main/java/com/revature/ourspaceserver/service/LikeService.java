@@ -28,11 +28,28 @@ public class LikeService {
         return this.likeDao.findAll();
     }
 
-    public Like createLike(Like like) {
+    //Get like based on userId and postId
+    public Like getLikeBasedOnUserIdAndPostId(Like like) {
         User user = this.userDao.findById(like.getUser().getUserId()).orElse(null);
         like.setUser(user);
         Post post = this.postDao.findById(like.getPost().getPostId()).orElse(null);
         like.setPost(post);
-        return this.likeDao.save(like);
+        like = this.likeDao.findLikeByUserAndPost(like.getUser(), like.getPost());
+        return like;
+    }
+
+    //Liking/unliking a post
+    public Like toggleLike(Like like) {
+        User user = this.userDao.findById(like.getUser().getUserId()).orElse(null);
+        Post post = this.postDao.findById(like.getPost().getPostId()).orElse(null);
+        Like liked = this.likeDao.findLikeByUserAndPost(user, post);
+        if(liked != null) {
+            this.likeDao.deleteLike(liked.getLikeId());
+            return null;
+        }else {
+            like.setUser(user);
+            like.setPost(post);
+            return this.likeDao.save(like);
+        }
     }
 }

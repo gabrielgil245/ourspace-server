@@ -3,6 +3,7 @@ package com.revature.ourspaceserver.controller;
 import com.revature.ourspaceserver.model.JsonResponse;
 import com.revature.ourspaceserver.model.Like;
 import com.revature.ourspaceserver.model.Post;
+import com.revature.ourspaceserver.model.User;
 import com.revature.ourspaceserver.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,12 @@ public class LikeController {
     }
 
     @PostMapping("like")
-    public JsonResponse createLike(@RequestBody Like like) {
-        return new JsonResponse(true, "Like successfully created", this.likeService.createLike(like));
+    public JsonResponse toggleLike(@RequestBody Like like) {
+        JsonResponse jsonResponse;
+        Like temp = this.likeService.toggleLike(like);
+        if(temp != null)
+            return new JsonResponse(true, "Like successfully created", temp);
+        else
+            return new JsonResponse(true, "Like successfully deleted", null);
     }
 }

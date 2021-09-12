@@ -111,18 +111,36 @@ class UserControllerTest {
     }
 
     @Test
-    void checkSession() {
-        /*//Assign
+    void checkSessionWhenInSession() {
+        //Assign
+        HttpSession session = Mockito.mock(HttpSession.class);
         User user = new User(1, "jwick", "password", "John", "Wick",
                 "test@test.com", null, null, null);
-        this.session.setAttribute("userInSession", user);
+        session.setAttribute("userInSession", user);
+        Mockito.when(session.getAttribute("userInSession")).thenReturn(user);
         JsonResponse expectedResult = new JsonResponse(true, "Session found", user);
 
         //Act
         JsonResponse actualResult = this.userController.checkSession(session);
 
         //Assert
-        assertEquals(expectedResult, actualResult);*/
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void checkSessionWhenNotInSession() {
+        //Assign
+        HttpSession session = Mockito.mock(HttpSession.class);
+        User user = new User(1, "jwick", "password", "John", "Wick",
+                "test@test.com", null, null, null);
+        Mockito.when(session.getAttribute("userInSession")).thenReturn(null);
+        JsonResponse expectedResult = new JsonResponse(false, "Session not found", null);
+
+        //Act
+        JsonResponse actualResult = this.userController.checkSession(session);
+
+        //Assert
+        assertEquals(expectedResult, actualResult);
     }
 
     @Test
