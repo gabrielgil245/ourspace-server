@@ -47,6 +47,12 @@
 			<version>1.4.200</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- Added email dependency-->
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.5.5</version>
+		</dependency>
 	</dependencies>
 
 	<build>

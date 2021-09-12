@@ -36,4 +36,7 @@ public class UserService {
         return this.userDao.save(user);
     }
 
+    public User resetUserPassword(User user) {
+        return this.userDao.save(user);
+    }
 }
