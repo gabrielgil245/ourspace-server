@@ -4,14 +4,7 @@ import com.revature.ourspaceserver.model.User;
 import com.revature.ourspaceserver.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.amazonaws.auth.*;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.*;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
 
 @Service("userService")

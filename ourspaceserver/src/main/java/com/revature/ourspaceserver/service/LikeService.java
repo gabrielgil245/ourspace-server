@@ -34,6 +34,7 @@ public class LikeService {
         like.setUser(user);
         Post post = this.postDao.findById(like.getPost().getPostId()).orElse(null);
         like.setPost(post);
+        if(like == null) return null;
         like = this.likeDao.findLikeByUserAndPost(like.getUser(), like.getPost());
         return like;
     }
@@ -42,6 +43,9 @@ public class LikeService {
     public Like toggleLike(Like like) {
         User user = this.userDao.findById(like.getUser().getUserId()).orElse(null);
         Post post = this.postDao.findById(like.getPost().getPostId()).orElse(null);
+        if(user == null || post == null) {
+            return null;
+        }
         Like liked = this.likeDao.findLikeByUserAndPost(user, post);
         if(liked != null) {
             this.likeDao.deleteLike(liked.getLikeId());
