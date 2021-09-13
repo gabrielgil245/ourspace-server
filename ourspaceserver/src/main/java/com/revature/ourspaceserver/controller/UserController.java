@@ -31,6 +31,8 @@ public class UserController {
     @PostMapping("user")
     public JsonResponse createUser(@RequestBody User user) {
         JsonResponse jsonResponse;
+        System.out.println("test2");
+        System.out.println(user);
 
         // Uses BCrypt to hash the password.
         // Get first the given user password from front-end, then hash it and store to tempPassword

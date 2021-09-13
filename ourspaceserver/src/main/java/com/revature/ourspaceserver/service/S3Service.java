@@ -28,12 +28,20 @@ public class S3Service {
         return s3Client;
     }
 
-    public void uploadFile(byte[] bytes, String fileName) throws IOException {
+    public void uploadProfilePic(byte[] bytes, String fileName) throws IOException {
         AmazonS3 s3Client = initialize();
         String bucketName = "project2.rev";
         writeByte(bytes,fileName);
         File file2 = new File("C:\\Users\\jgild\\Revature-Projects\\P2\\uploads\\" + fileName);
         s3Client.putObject(bucketName + "/profilepics", file2.getName(), file2);
+    }
+
+    public void uploadPostPic(byte[] bytes, String fileName) throws IOException {
+        AmazonS3 s3Client = initialize();
+        String bucketName = "project2.rev";
+        writeByte(bytes,fileName);
+        File file2 = new File("C:\\Users\\jgild\\Revature-Projects\\P2\\uploads\\" + fileName);
+        s3Client.putObject(bucketName + "/postpics", file2.getName(), file2);
     }
 
     void writeByte(byte[] bytes, String fileName)

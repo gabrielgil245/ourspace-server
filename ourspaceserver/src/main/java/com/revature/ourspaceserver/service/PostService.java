@@ -25,6 +25,7 @@ public class PostService {
     }
 
     public Post createPost(Post post) {
+        System.out.println(post.getUser());
         User user = this.userDao.findById(post.getUser().getUserId()).orElse(null);
         post.setUser(user);
         return this.postDao.save(post);

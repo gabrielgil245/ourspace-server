@@ -25,12 +25,22 @@ public class S3Controller {
     @PostMapping("signup")
     public JsonResponse postProfilePic(@RequestParam("imageFile")MultipartFile file) throws IOException {
         JsonResponse jsonResponse;
-        System.out.println("test");
         String fileName = file.getOriginalFilename();
         byte[] fileBytes = file.getBytes();
 
-        this.s3Service.uploadFile(fileBytes,fileName);
+        this.s3Service.uploadProfilePic(fileBytes,fileName);
         jsonResponse = new JsonResponse(true,"success", null);
+        return jsonResponse;
+    }
+
+    @PostMapping("post")
+    public JsonResponse postPostPic(@RequestParam("imageFile")MultipartFile file) throws IOException {
+        JsonResponse jsonResponse;
+        String fileName = file.getOriginalFilename();
+        byte[] fileBytes = file.getBytes();
+
+        this.s3Service.uploadPostPic(fileBytes, fileName);
+        jsonResponse = new JsonResponse(true, "success", null);
         return jsonResponse;
     }
 }
