@@ -3,12 +3,11 @@ package com.revature.ourspaceserver.service;
 import com.amazonaws.auth.*;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.*;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
 @Service("S3Service")
 public class S3Service {
@@ -30,38 +29,22 @@ public class S3Service {
 
     public void uploadProfilePic(byte[] bytes, String fileName) throws IOException {
         AmazonS3 s3Client = initialize();
-        String bucketName = "project2.rev";
-        writeByte(bytes,fileName);
-        File file2 = new File("C:\\Users\\jgild\\Revature-Projects\\P2\\uploads\\" + fileName);
-        s3Client.putObject(bucketName + "/profilepics", file2.getName(), file2);
+        String bucketName = "project2.rev/profilepics";
+        InputStream targetStream = new ByteArrayInputStream(bytes);
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(bytes.length);
+        PutObjectRequest objectRequest = new PutObjectRequest(bucketName,fileName,targetStream,objectMetadata);
+        s3Client.putObject(objectRequest);
     }
 
     public void uploadPostPic(byte[] bytes, String fileName) throws IOException {
         AmazonS3 s3Client = initialize();
-        String bucketName = "project2.rev";
-        writeByte(bytes,fileName);
-        File file2 = new File("C:\\Users\\jgild\\Revature-Projects\\P2\\uploads\\" + fileName);
-        s3Client.putObject(bucketName + "/postpics", file2.getName(), file2);
+        String bucketName = "project2.rev/postpics";
+        InputStream targetStream = new ByteArrayInputStream(bytes);
+        ObjectMetadata objectMetadata = new ObjectMetadata();
+        objectMetadata.setContentLength(bytes.length);
+        PutObjectRequest objectRequest = new PutObjectRequest(bucketName,fileName,targetStream,objectMetadata);
+        s3Client.putObject(objectRequest);
     }
 
-    void writeByte(byte[] bytes, String fileName)
-    {
-        File file = new File("C:\\Users\\jgild\\Revature-Projects\\P2\\uploads");
-        try {
-
-            // Initialize a pointer
-            // in file using OutputStream
-            OutputStream os = new FileOutputStream(file +"\\" + fileName);
-
-            // Starts writing the bytes in it
-            os.write(bytes);
-
-            // Close the file
-            os.close();
-        }
-
-        catch (Exception e) {
-            System.out.println("Exception: " + e);
-        }
-    }
 }
