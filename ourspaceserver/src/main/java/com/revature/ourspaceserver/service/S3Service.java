@@ -12,10 +12,12 @@ import java.io.*;
 @Service("S3Service")
 public class S3Service {
 
+    String awsID = System.getenv("AWS_S3_ID");
+    String awsKey = System.getenv("AWS_S3_KEY");
+    String region = "us-east-2";
+    String bucketName = "project2.rev";
+
     public AmazonS3 initialize(){
-        String awsID = System.getenv("AWS_S3_ID");
-        String awsKey = System.getenv("AWS_S3_KEY");
-        String region = "us-east-2";
 
         BasicAWSCredentials awsCredentials = new BasicAWSCredentials(awsID, awsKey);
 
@@ -29,7 +31,7 @@ public class S3Service {
 
     public void uploadProfilePic(byte[] bytes, String fileName) throws IOException {
         AmazonS3 s3Client = initialize();
-        String bucketName = "project2.rev/profilepics";
+        String bucketName = this.bucketName + "/profilepics";
         InputStream targetStream = new ByteArrayInputStream(bytes);
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(bytes.length);
@@ -39,7 +41,7 @@ public class S3Service {
 
     public void uploadPostPic(byte[] bytes, String fileName) throws IOException {
         AmazonS3 s3Client = initialize();
-        String bucketName = "project2.rev/postpics";
+        String bucketName = this.bucketName + "/postpics";
         InputStream targetStream = new ByteArrayInputStream(bytes);
         ObjectMetadata objectMetadata = new ObjectMetadata();
         objectMetadata.setContentLength(bytes.length);
