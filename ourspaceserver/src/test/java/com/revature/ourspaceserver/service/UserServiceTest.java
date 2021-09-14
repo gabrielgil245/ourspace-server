@@ -166,7 +166,7 @@ class UserServiceTest {
         Mockito.when(userDao.save(expectedResult)).thenReturn(expectedResult);
 
         //Act
-        User actualResult = this.userService.resetUserPassword(expectedResult);
+        User actualResult = this.userService.editUser(expectedResult);
 
         //Assert
         assertEquals(expectedResult, actualResult);
@@ -187,7 +187,7 @@ class UserServiceTest {
         Mockito.when(userDao.save(expectedResult)).thenReturn(beforeUpdate);
 
         //Act
-        User actualResult = this.userService.resetUserPassword(expectedResult);
+        User actualResult = this.userService.editUser(expectedResult);
 
         //Assert
         assertNotEquals(expectedResult, actualResult);
