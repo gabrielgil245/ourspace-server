@@ -2,6 +2,7 @@ package com.revature.ourspaceserver.controller;
 
 import com.revature.ourspaceserver.model.JsonResponse;
 import com.revature.ourspaceserver.model.User;
+import com.revature.ourspaceserver.service.BCrypt;
 import com.revature.ourspaceserver.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
@@ -154,5 +156,52 @@ class UserControllerTest {
 
         //Assert
         assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void forgotPassword() {
+
+    }
+
+    @Test
+    void editUser() {
+        //Assign
+        HttpSession session = Mockito.mock(HttpSession.class);
+        String oldPassword = "old";
+        String newPassword = "new";
+        User beforeUpdate = new User(1, "jwick", oldPassword, "John", "Wick",
+                "test@test.com", null, null, null);
+        User afterUpdate = new User(1, "jwick", newPassword, "John", "Wick",
+                "test@test.com", null, "Im friendly", null);
+        //Mockito.when(userService.editUser(beforeUpdate)).thenReturn(afterUpdate);
+        JsonResponse expectedResult = new JsonResponse(true, "Password was successfully updated.", afterUpdate);
+        //Act
+        JsonResponse actualResult = this.userController.editUser(session, beforeUpdate);
+
+        //Assert
+        assertNotEquals(expectedResult, actualResult);
+        //Verify
+        //Mockito.verify(userService, Mockito.times(1)).editUser(afterUpdate);
+    }
+
+    @Test
+    void resetPassword() {
+        //Assign
+        HttpSession session = Mockito.mock(HttpSession.class);
+        String oldPassword = "old";
+        String newPassword = "new";
+        User beforeUpdate = new User(1, "jwick", oldPassword, "John", "Wick",
+                "test@test.com", null, null, null);
+        User afterUpdate = new User(1, "jwick", newPassword, "John", "Wick",
+                "test@test.com", null, null, null);
+        //Mockito.when(userService.editUser(beforeUpdate)).thenReturn(afterUpdate);
+        JsonResponse expectedResult = new JsonResponse(true, "Password was successfully updated.", afterUpdate);
+        //Act
+        JsonResponse actualResult = this.userController.resetPassword(session, beforeUpdate);
+
+        //Assert
+        assertNotEquals(expectedResult, actualResult);
+        //Verify
+        //Mockito.verify(userService, Mockito.times(1)).editUser(afterUpdate);
     }
 }

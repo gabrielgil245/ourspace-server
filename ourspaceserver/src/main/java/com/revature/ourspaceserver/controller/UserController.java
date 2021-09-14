@@ -82,33 +82,68 @@ public class UserController {
         return new JsonResponse(true, "Session terminated", null);
     }
 
-    @PostMapping("reset-password")
+    @PatchMapping("reset-password")
     public JsonResponse resetPassword(HttpSession session, @RequestBody User user) {
         JsonResponse jsonResponse;
 
-        User tempUser = this.userService.getUserByUsername(user.getUsername());
+        User tempUser = (User) session.getAttribute("userInSession");
         if(tempUser == null)
             return null;
 
-        // Use BCrypt checkpw() method to see if it matched the hashed value of the password
-        if (BCrypt.checkpw(user.getPassword(), tempUser.getPassword())) {
-            // If old password match to the hashed value then change to anew one.
-            String newPassword = user.getEmail(); // stored temporarily the new password in email field from front-end
-            // Hash the new password and set it to user password.
-            String hashPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt(12));
-            tempUser.setPassword(hashPassword); // set the hashed password value
+        String newPassword = user.getPassword();
+        // Hash the new password and set it to user password.
+        String hashPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt(12));
+        tempUser.setPassword(hashPassword); // set the hashed password value
 
-            User currentUser = this.userService.resetUserPassword(tempUser);
-            if (currentUser != null) {
-                // Send email for successful registration
-                EmailUtility.sendEmail(currentUser.getEmail(), currentUser.getUsername(), "reset");
-                jsonResponse = new JsonResponse(true, "Password was successfully updated.", currentUser);
-            } else {
-                jsonResponse = new JsonResponse(false, "Error occurred during change of password.", null);
-            }
-            return jsonResponse;
+        User currentUser = this.userService.editUser(tempUser);
+        if (currentUser != null) {
+            // Send email for successful registration
+            EmailUtility.sendEmail(currentUser.getEmail(), currentUser.getUsername(), "reset");
+            jsonResponse = new JsonResponse(true, "Password was successfully updated.", currentUser);
         } else {
-            return null;
+            jsonResponse = new JsonResponse(false, "Error occurred during change of password.", null);
+        }
+        return jsonResponse;
+    }
+
+    @GetMapping("forgot-password")
+    public JsonResponse resetPassword(HttpSession session) {
+        JsonResponse jsonResponse;
+        User user = (User) session.getAttribute("userInSession");
+        if (user != null) {
+            //Send forgot-password email
+            EmailUtility.sendEmail(user.getEmail(), user.getUsername(), "forgot");
+            return jsonResponse = new JsonResponse(true, "Forgot password email sent", user);
+        } else {
+            jsonResponse = new JsonResponse(false, "Session not found", null);
+            return jsonResponse;
         }
     }
+
+    @PatchMapping("user")
+    public JsonResponse editUser(HttpSession session, @RequestBody User user) {
+        JsonResponse jsonResponse;
+
+        User tempUser = (User) session.getAttribute("userInSession");
+        if(tempUser == null)
+            return null;
+
+        //Edit the editable fields
+        tempUser.setAboutMe(user.getAboutMe());
+        tempUser.setBirthday(user.getBirthday());
+        tempUser.setFirstName(user.getFirstName());
+        tempUser.setLastName(user.getLastName());
+        tempUser.setProfilePic(user.getProfilePic());
+
+        User currentUser = this.userService.editUser(tempUser);
+        if (currentUser != null) {
+            // Send email for successful registration
+            EmailUtility.sendEmail(currentUser.getEmail(), currentUser.getUsername(), "update");
+            jsonResponse = new JsonResponse(true, "Profile was successfully updated.", currentUser);
+        } else {
+            jsonResponse = new JsonResponse(false, "Error occurred during the profile update.", null);
+        }
+        return jsonResponse;
+    }
 }
+

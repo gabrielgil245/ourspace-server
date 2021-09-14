@@ -15,21 +15,26 @@ public class EmailUtility {
             final String password = "P4ssw0rd!"; // correct password for gmail id
             String subject = "";
             String body = "";
+            String link = "http://localhost:4200";
 
             if (status == "new"){
                 subject = "RevaSoNet - User Registration Confirmation";
                 body = "Welcome to Revature Social Network! \n\n" +
                         "This is to confirm that your email address was added to the system. \n\n" +
                         "Please click below to login \n\n" +
-                        "LINK: " + "http://localhost:9000";
+                        "LINK: " + link;
+            } else if (status == "forgot") {
+                subject = "RevaSoNet - Forgot Password Confirmation";
+                body = "Hi " + userName.toUpperCase() + ",\n\n This is to confirm that you are trying to reset your password. \n\n" +
+                        "Click the link to proceed: " + link + "/reset-password/" + userName;
             } else if (status == "reset") {
                 subject = "RevaSoNet - Reset Password Confirmation";
-                body = "Hi " + userName.toUpperCase() + ",\n\n This is to confirm that you are trying to change your password. \n\n" +
-                        "Click the link to proceed: " + "http://localhost:9000/reset-password/" + userName;
+                body = "Hi " + userName.toUpperCase() + ",\n\n This is to confirm that you have successfully updated your password. \n\n" +
+                        "Click the link to login: " + link;
             } else if (status == "update") {
                 subject = "RevaSoNet - Update Profile Confirmation";
                 body = "Hi " + userName.toUpperCase() + ",\n\n This is to confirm that you are trying to change your password. \n\n" +
-                        "Click the link to proceed: " + "http://localhost:9000/edit-profile/" + userName;
+                        "Click the link to proceed: " + link + "/edit-profile/" + userName;
             }
 
             Properties props = new Properties();
