@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 @Repository("postDao")
@@ -16,16 +15,18 @@ import java.util.List;
 public interface PostDao extends JpaRepository<Post, Integer> {
     //For when the user selects another user to see their profile
     List<Post> findPostByUser(User user);
-    //To filter the number of posts in a feed based on the page number
-    @Query("From Post where postId > :postIdStart and postId < :postIdEnd")
-    List<Post> retrievePostByPageNumber(
+
+    //Filters the number of posts in a feed based on the page number in descending order by post submitted
+    @Query("From Post where postId > :postIdStart and postId < :postIdEnd order by postSubmitted desc")
+    List<Post> retrievePostsByOrderByPostSubmittedDesc(
             @Param("postIdStart") Integer postIdStart,
             @Param("postIdEnd") Integer postIdEnd);
 
-    //To filter the number of posts in another user's feed based on the page number
-    @Query("From Post where user = :user and postId > :postIdStart and postId < :postIdEnd")
-    List<Post> retrievePostByUserAndPageNumber(
+    //Filters the number of posts in another user's feed based on the page number
+    @Query("From Post where user = :user and postId > :postIdStart and postId < :postIdEnd order by postSubmitted desc")
+    List<Post> retrievePostByUserAndPageNumberOrderByPostSubmittedDesc(
             @Param("user") User user,
             @Param("postIdStart") Integer postIdStart,
             @Param("postIdEnd") Integer postIdEnd);
+
 }

@@ -5,8 +5,10 @@ import com.revature.ourspaceserver.model.User;
 import com.revature.ourspaceserver.repository.PostDao;
 import com.revature.ourspaceserver.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("postService")
@@ -37,8 +39,24 @@ public class PostService {
     }
 
     public List<Post> getPostsByPageNumber(Integer pageNumber) {
-        Integer postIdStart = 0 + ((pageNumber - 1) * 20);
-        Integer postIdEnd = 21 + ((pageNumber - 1) * 20);
-        return this.postDao.retrievePostByPageNumber(postIdStart, postIdEnd);
+        Integer pagesToDisplay = 5;
+        Long totalNumberOfPosts = this.postDao.count();
+        Long postEnd = ((totalNumberOfPosts + 1) - ((pageNumber - 1) * pagesToDisplay));
+        Long postStart = ((totalNumberOfPosts - pagesToDisplay) - ((pageNumber - 1) * pagesToDisplay));
+        List<Post> posts = this.postDao.
+                retrievePostsByOrderByPostSubmittedDesc(postStart.intValue(), postEnd.intValue());
+        return posts;
+    }
+
+    public List<Post> getPostsByUserAndPageNumber(Integer userId, Integer pageNumber) {
+        User user = this.userDao.findById(userId).orElse(null);
+        Integer pagesToDisplay = 5;
+        Long totalNumberOfPosts = this.postDao.count();
+        Long postEnd = ((totalNumberOfPosts + 1) - ((pageNumber - 1) * pagesToDisplay));
+        Long postStart = ((totalNumberOfPosts - pagesToDisplay) - ((pageNumber - 1) * pagesToDisplay));
+        List<Post> posts = this.postDao.
+                retrievePostByUserAndPageNumberOrderByPostSubmittedDesc(
+                        user, postStart.intValue(), postEnd.intValue());
+        return posts;
     }
 }
