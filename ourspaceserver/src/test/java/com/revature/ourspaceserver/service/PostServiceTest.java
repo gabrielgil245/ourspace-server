@@ -101,8 +101,8 @@ class PostServiceTest {
         Post post2 = new Post(2, Timestamp.from(Instant.now()),"post Description2", "post Image URL2", "youtube URL2", user2);
         expected.add(post2);
         expected.add(post3);
-        Mockito.when(postDao.count()).thenReturn(7L);
-        Mockito.when(postDao.retrievePostsByOrderByPostSubmittedDesc(2,9)).thenReturn(expected);
+        Mockito.when(postDao.count()).thenReturn(6L);
+        Mockito.when(postDao.retrievePostsByOrderByPostSubmittedDesc(2,8)).thenReturn(expected);
         List<Post> actual = this.postService.getPostsByPageNumber(1);
         assertEquals(expected,actual);
     }
