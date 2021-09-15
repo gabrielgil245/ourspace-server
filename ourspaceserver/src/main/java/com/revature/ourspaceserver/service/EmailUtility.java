@@ -26,7 +26,7 @@ public class EmailUtility {
             } else if (status == "forgot") {
                 subject = "RevaSoNet - Forgot Password Confirmation";
                 body = "Hi " + userName.toUpperCase() + ",\n\n This is to confirm that you are trying to reset your password. \n\n" +
-                        "Click the link to proceed: " + link + "/reset-password/" + userName;
+                        "Click the link to proceed: " + link + "/reset-password/" + toEmail;
             } else if (status == "reset") {
                 subject = "RevaSoNet - Reset Password Confirmation";
                 body = "Hi " + userName.toUpperCase() + ",\n\n This is to confirm that you have successfully updated your password. \n\n" +
