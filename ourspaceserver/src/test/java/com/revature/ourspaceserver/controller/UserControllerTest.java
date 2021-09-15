@@ -185,23 +185,39 @@ class UserControllerTest {
     }
 
     @Test
-    void resetPassword() {
+    void getUserByEmail() {
         //Assign
         HttpSession session = Mockito.mock(HttpSession.class);
-        String oldPassword = "old";
-        String newPassword = "new";
-        User beforeUpdate = new User(1, "jwick", oldPassword, "John", "Wick",
+        User user = new User(1, "jwick", "password", "John", "Wick",
                 "test@test.com", null, null, null);
-        User afterUpdate = new User(1, "jwick", newPassword, "John", "Wick",
-                "test@test.com", null, null, null);
-        //Mockito.when(userService.editUser(beforeUpdate)).thenReturn(afterUpdate);
-        JsonResponse expectedResult = new JsonResponse(true, "Password was successfully updated.", afterUpdate);
+        JsonResponse expectedResult = new JsonResponse(true, "User found with the associated email "+ user.getEmail(), user);
+        Mockito.when(userService.getUserByEmail(user.getEmail())).thenReturn(user);
+
         //Act
-        JsonResponse actualResult = this.userController.resetPassword(session, beforeUpdate);
+        JsonResponse actualResult = this.userController.getUserByEmail(session, user.getEmail());
 
         //Assert
-        assertNotEquals(expectedResult, actualResult);
-        //Verify
-        //Mockito.verify(userService, Mockito.times(1)).editUser(afterUpdate);
+        assertEquals(expectedResult, actualResult);
     }
+
+//    @Test
+//    void resetPassword() {
+//        //Assign
+//        HttpSession session = Mockito.mock(HttpSession.class);
+//        String oldPassword = "old";
+//        String newPassword = "new";
+//        User beforeUpdate = new User(1, "jwick", oldPassword, "John", "Wick",
+//                "test@test.com", null, null, null);
+//        User afterUpdate = new User(1, "jwick", newPassword, "John", "Wick",
+//                "test@test.com", null, null, null);
+//        //Mockito.when(userService.editUser(beforeUpdate)).thenReturn(afterUpdate);
+//        JsonResponse expectedResult = new JsonResponse(true, "Password was successfully updated.", afterUpdate);
+//        //Act
+//        JsonResponse actualResult = this.userController.resetPassword(session, beforeUpdate, afterUpdate.getEmail());
+//
+//        //Assert
+//        assertNotEquals(expectedResult, actualResult);
+//        //Verify
+//        //Mockito.verify(userService, Mockito.times(1)).editUser(afterUpdate);
+//    }
 }

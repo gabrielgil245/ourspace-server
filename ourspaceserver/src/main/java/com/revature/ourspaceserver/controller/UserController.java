@@ -87,8 +87,13 @@ public class UserController {
         JsonResponse jsonResponse;
 
         User tempUser = (User) session.getAttribute("userInSession");
-        if(tempUser == null)
-            return null;
+        if(tempUser == null){
+            if(user.getEmail() == null || !user.getEmail().isEmpty()) {
+                tempUser = this.userService.getUserByEmail(user.getEmail());
+            } else {
+                return null;
+            }
+        }
 
         String newPassword = user.getPassword();
         // Hash the new password and set it to user password.
@@ -106,16 +111,17 @@ public class UserController {
         return jsonResponse;
     }
 
-    @GetMapping("forgot-password")
-    public JsonResponse resetPassword(HttpSession session) {
+    @GetMapping("forgot-password/{email}")
+    public JsonResponse forgotPassword(@PathVariable String email) {
         JsonResponse jsonResponse;
-        User user = (User) session.getAttribute("userInSession");
-        if (user != null) {
+        try{
+            User user = this.userService.getUserByEmail(email);
             //Send forgot-password email
+            System.out.println("EMAIL Sent to : " + user.getEmail());
             EmailUtility.sendEmail(user.getEmail(), user.getUsername(), "forgot");
             return jsonResponse = new JsonResponse(true, "Forgot password email sent", user);
-        } else {
-            jsonResponse = new JsonResponse(false, "Session not found", null);
+        } catch (Exception ex) {
+            jsonResponse = new JsonResponse(false, "Error found" + ex, null);
             return jsonResponse;
         }
     }
@@ -142,6 +148,19 @@ public class UserController {
             jsonResponse = new JsonResponse(true, "Profile was successfully updated.", currentUser);
         } else {
             jsonResponse = new JsonResponse(false, "Error occurred during the profile update.", null);
+        }
+        return jsonResponse;
+    }
+
+    @GetMapping("user/{email}")
+    public JsonResponse getUserByEmail(HttpSession session, @PathVariable String email) {
+        JsonResponse jsonResponse;
+        User currentUser = this.userService.getUserByEmail(email);
+
+        if (currentUser != null){
+            jsonResponse = new JsonResponse(true, "User found with the associated email "+ email, currentUser);
+        }else {
+            jsonResponse = new JsonResponse(false, "Email does not exist in the system", null);
         }
         return jsonResponse;
     }
