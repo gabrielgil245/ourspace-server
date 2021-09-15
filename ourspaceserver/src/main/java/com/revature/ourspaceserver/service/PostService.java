@@ -29,19 +29,26 @@ public class PostService {
     public Post createPost(Post post) {
         System.out.println(post.getUser());
         User user = this.userDao.findById(post.getUser().getUserId()).orElse(null);
-        post.setUser(user);
-        return this.postDao.save(post);
+        if(user != null) {
+            post.setUser(user);
+            return this.postDao.save(post);
+        }
+        else
+            return null;
     }
 
     public List<Post> getAllPostsByUser(Integer userId) {
         User user = this.userDao.findById(userId).orElse(null);
-        return this.postDao.findPostByUser(user);
+        if(user != null)
+            return this.postDao.findPostByUser(user);
+
+        return null;
     }
 
     public List<Post> getPostsByPageNumber(Integer pageNumber) {
         Integer pagesToDisplay = 5;
         Long totalNumberOfPosts = this.postDao.count();
-        Long postEnd = ((totalNumberOfPosts + 1) - ((pageNumber - 1) * pagesToDisplay));
+        Long postEnd = ((totalNumberOfPosts + 2) - ((pageNumber - 1) * pagesToDisplay));
         Long postStart = ((totalNumberOfPosts - pagesToDisplay) - ((pageNumber - 1) * pagesToDisplay));
         List<Post> posts = this.postDao.
                 retrievePostsByOrderByPostSubmittedDesc(postStart.intValue(), postEnd.intValue());
@@ -50,13 +57,16 @@ public class PostService {
 
     public List<Post> getPostsByUserAndPageNumber(Integer userId, Integer pageNumber) {
         User user = this.userDao.findById(userId).orElse(null);
-        Integer pagesToDisplay = 5;
-        Long totalNumberOfPosts = this.postDao.count();
-        Long postEnd = ((totalNumberOfPosts + 1) - ((pageNumber - 1) * pagesToDisplay));
-        Long postStart = ((totalNumberOfPosts - pagesToDisplay) - ((pageNumber - 1) * pagesToDisplay));
-        List<Post> posts = this.postDao.
-                retrievePostByUserAndPageNumberOrderByPostSubmittedDesc(
-                        user, postStart.intValue(), postEnd.intValue());
-        return posts;
+        if(user != null) {
+            Integer pagesToDisplay = 5;
+            Long totalNumberOfPosts = this.postDao.count();
+            Long postEnd = ((totalNumberOfPosts + 1) - ((pageNumber - 1) * pagesToDisplay));
+            Long postStart = ((totalNumberOfPosts - pagesToDisplay) - ((pageNumber - 1) * pagesToDisplay));
+            List<Post> posts = this.postDao.
+                    retrievePostByUserAndPageNumberOrderByPostSubmittedDesc(
+                            user, postStart.intValue(), postEnd.intValue());
+            return posts;
+        }
+        return null;
     }
 }
