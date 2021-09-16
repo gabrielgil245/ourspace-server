@@ -185,7 +185,39 @@ class UserControllerTest {
     }
 
     @Test
-    void getUserByEmail() {
+    void getUserByUsernameWhenNotNull() {
+        //Assign
+        HttpSession session = Mockito.mock(HttpSession.class);
+        User user = new User(1, "jwick", "password", "John", "Wick",
+                "test@test.com", null, null, null);
+        JsonResponse expectedResult = new JsonResponse(true, "User found with the associated username "+ user.getUsername(), user);
+        Mockito.when(userService.getUserByUsername(user.getUsername())).thenReturn(user);
+
+        //Act
+        JsonResponse actualResult = this.userController.getUserByUsername(session, user.getUsername());
+
+        //Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @Test
+    void getUserByUsernameWhenNull() {
+        //Assign
+        HttpSession session = Mockito.mock(HttpSession.class);
+        User user = new User(1, "jwick", "password", "John", "Wick",
+                "test@test.com", null, null, null);
+        JsonResponse expectedResult = new JsonResponse(false, "Username does not exist in the system", null);
+        Mockito.when(userService.getUserByUsername(user.getUsername())).thenReturn(null);
+
+        //Act
+        JsonResponse actualResult = this.userController.getUserByUsername(session, user.getUsername());
+
+        //Assert
+        assertEquals(expectedResult, actualResult);
+    }
+
+   /* @Test
+    void getUserByEmailWhenNotNull() {
         //Assign
         HttpSession session = Mockito.mock(HttpSession.class);
         User user = new User(1, "jwick", "password", "John", "Wick",
@@ -199,6 +231,22 @@ class UserControllerTest {
         //Assert
         assertEquals(expectedResult, actualResult);
     }
+
+    @Test
+    void getUserByEmailWhenNull() {
+        //Assign
+        HttpSession session = Mockito.mock(HttpSession.class);
+        User user = new User(1, "jwick", "password", "John", "Wick",
+                "test@test.com", null, null, null);
+        JsonResponse expectedResult = new JsonResponse(false, "Email does not exist in the system", null);
+        Mockito.when(userService.getUserByEmail(user.getEmail())).thenReturn(null);
+
+        //Act
+        JsonResponse actualResult = this.userController.getUserByEmail(session, user.getEmail());
+
+        //Assert
+        assertEquals(expectedResult, actualResult);
+    }*/
 
 //    @Test
 //    void resetPassword() {
