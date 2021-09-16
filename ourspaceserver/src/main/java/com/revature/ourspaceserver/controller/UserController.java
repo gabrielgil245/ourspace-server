@@ -152,7 +152,20 @@ public class UserController {
         return jsonResponse;
     }
 
-    @GetMapping("user/{email}")
+    @GetMapping("user/{username}")
+    public JsonResponse getUserByUsername(HttpSession session, @PathVariable String username) {
+        JsonResponse jsonResponse;
+        User currentUser = this.userService.getUserByUsername(username);
+
+        if (currentUser != null){
+            jsonResponse = new JsonResponse(true, "User found with the associated username "+ username, currentUser);
+        }else {
+            jsonResponse = new JsonResponse(false, "Username does not exist in the system", null);
+        }
+        return jsonResponse;
+    }
+
+    /*@GetMapping("user/{email}")
     public JsonResponse getUserByEmail(HttpSession session, @PathVariable String email) {
         JsonResponse jsonResponse;
         User currentUser = this.userService.getUserByEmail(email);
@@ -163,6 +176,6 @@ public class UserController {
             jsonResponse = new JsonResponse(false, "Email does not exist in the system", null);
         }
         return jsonResponse;
-    }
+    }*/
 }
 

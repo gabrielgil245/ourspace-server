@@ -46,10 +46,10 @@ public class PostService {
     }
 
     public List<Post> getPostsByPageNumber(Integer pageNumber) {
-        Integer pagesToDisplay = 5;
+        Integer postsToDisplay = 5;
         Long totalNumberOfPosts = this.postDao.count();
-        Long postEnd = ((totalNumberOfPosts + 2) - ((pageNumber - 1) * pagesToDisplay));
-        Long postStart = ((totalNumberOfPosts - pagesToDisplay) + 1 - ((pageNumber - 1) * pagesToDisplay));
+        Long postEnd = ((totalNumberOfPosts + 1) - ((pageNumber - 1) * postsToDisplay));
+        Long postStart = ((totalNumberOfPosts - postsToDisplay) - ((pageNumber - 1) * postsToDisplay));
         List<Post> posts = this.postDao.
                 retrievePostsByOrderByPostSubmittedDesc(postStart.intValue(), postEnd.intValue());
         return posts;
@@ -58,10 +58,10 @@ public class PostService {
     public List<Post> getPostsByUserAndPageNumber(Integer userId, Integer pageNumber) {
         User user = this.userDao.findById(userId).orElse(null);
         if(user != null) {
-            Integer pagesToDisplay = 5;
+            Integer postsToDisplay = 5;
             Long totalNumberOfPosts = this.postDao.count();
-            Long postEnd = ((totalNumberOfPosts + 1) - ((pageNumber - 1) * pagesToDisplay));
-            Long postStart = ((totalNumberOfPosts - pagesToDisplay) - ((pageNumber - 1) * pagesToDisplay));
+            Long postEnd = ((totalNumberOfPosts + 1) - ((pageNumber - 1) * postsToDisplay));
+            Long postStart = ((totalNumberOfPosts - postsToDisplay) - ((pageNumber - 1) * postsToDisplay));
             List<Post> posts = this.postDao.
                     retrievePostByUserAndPageNumberOrderByPostSubmittedDesc(
                             user, postStart.intValue(), postEnd.intValue());
