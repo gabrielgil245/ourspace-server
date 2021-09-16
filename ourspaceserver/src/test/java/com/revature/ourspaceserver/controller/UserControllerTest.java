@@ -216,7 +216,7 @@ class UserControllerTest {
         assertEquals(expectedResult, actualResult);
     }
 
-   /* @Test
+    @Test
     void getUserByEmailWhenNotNull() {
         //Assign
         HttpSession session = Mockito.mock(HttpSession.class);
@@ -246,7 +246,7 @@ class UserControllerTest {
 
         //Assert
         assertEquals(expectedResult, actualResult);
-    }*/
+    }
 
 //    @Test
 //    void resetPassword() {
