@@ -19,4 +19,6 @@ public interface LikeDao extends JpaRepository<Like, Integer> {
     @Modifying
     @Query("Delete from Like where likeId = :likeId")
     void deleteLike(@Param("likeId") Integer likeId);
+
+    List<Like> findLikeByUser(User user);
 }

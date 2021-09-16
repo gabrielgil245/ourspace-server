@@ -56,4 +56,12 @@ public class LikeService {
             return this.likeDao.save(like);
         }
     }
+
+    public List<Like> getLikesBasedOnUser(Integer userId){
+        User user = this.userDao.findById(userId).orElse(null);
+        if(user != null)
+            return this.likeDao.findLikeByUser(user);
+
+        return null;
+    }
 }
