@@ -8,6 +8,8 @@ import com.revature.ourspaceserver.service.LikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController("likeController")
 @RequestMapping("/api")
 @CrossOrigin(value="http://localhost:4200", allowCredentials = "true")
@@ -24,7 +26,7 @@ public class LikeController {
         return new JsonResponse(true, "Listing all likes", this.likeService.getAllLikes());
     }
 
-    @GetMapping("like/{postId}")
+    @GetMapping("like/post/{postId}")
     public JsonResponse getLikesByPostId(@PathVariable Integer postId) {
         return new JsonResponse(true, "Listing likes belonging to a post",
                 this.likeService.getLikeBasedOnPostId(postId));
@@ -38,5 +40,10 @@ public class LikeController {
             return new JsonResponse(true, "Like successfully created", temp);
         else
             return new JsonResponse(true, "Like successfully deleted", null);
+    }
+
+    @GetMapping("like/{userId}")
+    public List<Like> getAllLikesByUser(@PathVariable Integer userId) {
+        return likeService.getLikesBasedOnUser(userId);
     }
 }
