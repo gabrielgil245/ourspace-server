@@ -15,7 +15,7 @@ public class S3Service {
     String awsID = System.getenv("AWS_S3_ID");
     String awsKey = System.getenv("AWS_S3_KEY");
     String region = "us-east-2";
-    String bucketName = "project2.rev";
+    String bucketName = System.getenv("AWS_S3_BUCKET");
 
     public AmazonS3 initialize(){
 
