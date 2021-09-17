@@ -26,7 +26,7 @@ public class LikeController {
         return new JsonResponse(true, "Listing all likes", this.likeService.getAllLikes());
     }
 
-    @GetMapping("like/{postId}")
+    @GetMapping("like/post/{postId}")
     public JsonResponse getLikesByPostId(@PathVariable Integer postId) {
         return new JsonResponse(true, "Listing likes belonging to a post",
                 this.likeService.getLikeBasedOnPostId(postId));
