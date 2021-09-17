@@ -16,6 +16,7 @@ import java.util.List;
 @Transactional
 public interface LikeDao extends JpaRepository<Like, Integer> {
     Like findLikeByUserAndPost(User user, Post post);
+    List<Like> findLikeByPost(Post post);
     @Modifying
     @Query("Delete from Like where likeId = :likeId")
     void deleteLike(@Param("likeId") Integer likeId);

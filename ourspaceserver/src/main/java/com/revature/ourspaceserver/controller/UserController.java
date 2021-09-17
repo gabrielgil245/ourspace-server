@@ -156,7 +156,7 @@ public class UserController {
         return jsonResponse;
     }
 
-    @GetMapping("user/{username}")
+    @GetMapping("username/{username}")
     public JsonResponse getUserByUsername(HttpSession session, @PathVariable String username) {
         JsonResponse jsonResponse;
         User currentUser = this.userService.getUserByUsername(username);

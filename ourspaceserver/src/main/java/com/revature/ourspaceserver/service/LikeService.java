@@ -9,6 +9,7 @@ import com.revature.ourspaceserver.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("likeService")
@@ -37,6 +38,15 @@ public class LikeService {
         if(like == null) return null;
         like = this.likeDao.findLikeByUserAndPost(like.getUser(), like.getPost());
         return like;
+    }
+
+    //Get likes based on postId
+    public List<Like> getLikeBasedOnPostId(Integer postId) {
+        List<Like> likes = new ArrayList<>();
+        Post post = this.postDao.findById(postId).orElse(null);
+        if(post == null) return null;
+        likes = this.likeDao.findLikeByPost(post);
+        return likes;
     }
 
     //Liking/unliking a post
