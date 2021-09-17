@@ -48,8 +48,8 @@ public class PostService {
     public List<Post> getPostsByPageNumber(Integer pageNumber) {
         Integer postsToDisplay = 5;
         Long totalNumberOfPosts = this.postDao.count();
-        Long postEnd = ((totalNumberOfPosts + 2) - ((pageNumber - 1) * postsToDisplay));
-        Long postStart = ((totalNumberOfPosts - postsToDisplay) +1 - ((pageNumber - 1) * postsToDisplay));
+        Long postEnd = ((totalNumberOfPosts + 1) - ((pageNumber - 1) * postsToDisplay));
+        Long postStart = ((totalNumberOfPosts - postsToDisplay)  - ((pageNumber - 1) * postsToDisplay));
         List<Post> posts = this.postDao.
                 retrievePostsByOrderByPostSubmittedDesc(postStart.intValue(), postEnd.intValue());
         return posts;
