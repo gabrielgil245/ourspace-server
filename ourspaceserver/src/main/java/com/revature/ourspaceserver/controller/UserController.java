@@ -148,7 +148,7 @@ public class UserController {
         System.out.println(currentUser);
         if (currentUser != null) {
             // Send email for successful registration
-            EmailUtility.sendEmail(currentUser.getEmail(), currentUser.getUsername(), "update");
+            // EmailUtility.sendEmail(currentUser.getEmail(), currentUser.getUsername(), "update");
             jsonResponse = new JsonResponse(true, "Profile was successfully updated.", currentUser);
         } else {
             jsonResponse = new JsonResponse(false, "Error occurred during the profile update.", null);
