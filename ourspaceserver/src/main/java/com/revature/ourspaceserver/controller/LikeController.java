@@ -23,7 +23,13 @@ public class LikeController {
 
     @GetMapping("like")
     public JsonResponse getAllLikes() {
-        return new JsonResponse(true, "listing all likes", this.likeService.getAllLikes());
+        return new JsonResponse(true, "Listing all likes", this.likeService.getAllLikes());
+    }
+
+    @GetMapping("like/{postId}")
+    public JsonResponse getLikesByPostId(@PathVariable Integer postId) {
+        return new JsonResponse(true, "Listing likes belonging to a post",
+                this.likeService.getLikeBasedOnPostId(postId));
     }
 
     @PostMapping("like")
