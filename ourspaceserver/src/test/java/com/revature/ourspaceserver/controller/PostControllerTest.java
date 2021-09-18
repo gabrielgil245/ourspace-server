@@ -1,7 +1,6 @@
 package com.revature.ourspaceserver.controller;
 
 import com.revature.ourspaceserver.model.JsonResponse;
-import com.revature.ourspaceserver.model.Like;
 import com.revature.ourspaceserver.model.Post;
 import com.revature.ourspaceserver.model.User;
 import com.revature.ourspaceserver.service.PostService;
@@ -12,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -27,10 +25,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class PostControllerTest {
 
     PostController postController;
-
     @Mock
     PostService postService;
-
 
     @BeforeEach
     void setUp() {
@@ -61,26 +57,36 @@ class PostControllerTest {
 
     @Test
     void getPostsByPageNumber() {
-        List<Post> expected = new ArrayList<>();
+
         User user = new User(1,"test","password","service","tests","test@test.com", Date.from(Instant.now()), "description", "profile Pic URL");
-        Post post = new Post(2, Timestamp.from(Instant.now()),"post Description2", "post Image URL2", "youtube URL2", user);
-        Post post2 = new Post(3, Timestamp.from(Instant.now()),"post Description", "post Image URL", "youtube URL", user);
+        User user2 = new User(2,"test2","password2","service2","tests2","test2@test.com", Date.from(Instant.now()), "description", "profile Pic URL");
+        Post post1 = new Post(2, Timestamp.from(Instant.now()),"post Description2", "post Image URL2", "youtube URL2", user);
+        Post post2 = new Post(3, Timestamp.from(Instant.now()),"post Description", "post Image URL", "youtube URL", user2);
+
+        List<Post> expected = new ArrayList<>();
         expected.add(post2);
+        expected.add(post1);
         Mockito.when(postService.getPostsByPageNumber(1)).thenReturn(expected);
+
         List<Post> actual = postController.getPostsByPageNumber(1);
+
         assertEquals(expected,actual);
     }
 
     @Test
-    void testGetPostsByPageNumber() {
-        List<Post> expected = new ArrayList<>();
+    void getPostsByUserAndPageNumber() {
+
         User user = new User(1,"test","password","service","tests","test@test.com", Date.from(Instant.now()), "description", "profile Pic URL");
-        User user2 = new User(2,"test2","password2","service2","tests2","test2@test.com", Date.from(Instant.now()), "description", "profile Pic URL");
-        Post post = new Post(2, Timestamp.from(Instant.now()),"post Description2", "post Image URL2", "youtube URL2", user);
-        Post post2 = new Post(3, Timestamp.from(Instant.now()),"post Description", "post Image URL", "youtube URL", user2);
+        Post post1 = new Post(2, Timestamp.from(Instant.now()),"post Description2", "post Image URL2", "youtube URL2", user);
+        Post post2 = new Post(3, Timestamp.from(Instant.now()),"post Description", "post Image URL", "youtube URL", user);
+
+        List<Post> expected = new ArrayList<>();
         expected.add(post2);
+        expected.add(post1);
         Mockito.when(postService.getPostsByUserAndPageNumber(1,1)).thenReturn(expected);
-        List<Post> actual = postController.getPostsByPageNumber(1,1);
+
+        List<Post> actual = postController.getPostsByUserAndPageNumber(1,1);
+
         assertEquals(expected,actual);
     }
 }
