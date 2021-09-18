@@ -83,9 +83,9 @@ class PostControllerTest {
         List<Post> expected = new ArrayList<>();
         expected.add(post2);
         expected.add(post1);
-        Mockito.when(postService.getPostsByUserAndPageNumber(1,1)).thenReturn(expected);
+        Mockito.when(postService.getPostsByUserAndPageNumber(user.getUsername(),1)).thenReturn(expected);
 
-        List<Post> actual = postController.getPostsByUserAndPageNumber(1,1);
+        List<Post> actual = postController.getPostsByUserAndPageNumber(user.getUsername(),1);
 
         assertEquals(expected,actual);
     }

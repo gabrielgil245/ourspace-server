@@ -145,13 +145,13 @@ class PostServiceTest {
     @Test
     void getPostsByUserAndPageNumberTestWhenUserDoesNotExist(){
         //Assign
-        Integer userId = 0;
+        String username = "";
         Integer pageNumber = 1;
         List<Post> expectedResult = null;
-        Mockito.when(userDao.findById(userId)).thenReturn(Optional.empty());
+        Mockito.when(userDao.findUserByUsername(username)).thenReturn(null);
 
         //Act
-        List<Post> actualResult = postService.getPostsByUserAndPageNumber(userId, pageNumber);
+        List<Post> actualResult = postService.getPostsByUserAndPageNumber(username, pageNumber);
 
         //Assert
         assertEquals(expectedResult, actualResult);
@@ -160,7 +160,6 @@ class PostServiceTest {
     @Test
     void getPostsByUserAndPageNumberTestWhenUserDoesExist(){
         //Assign
-        Integer userId = 1;
         Integer pageNumber = 1;
 
         User user = new User(1,"test","password","service","tests","test@test.com",Date.from(Instant.now()), "description", "profile Pic URL");
@@ -175,11 +174,11 @@ class PostServiceTest {
         expected.add(post2);
         expected.add(post3);
 
-        Mockito.when(userDao.findById(userId)).thenReturn(Optional.of(user));
+        Mockito.when(userDao.findUserByUsername(user.getUsername())).thenReturn(user);
         Mockito.when(postDao.findPostByUserOrderByPostSubmittedDesc(user)).thenReturn(expected);
 
         //Act
-        List<Post> actual = postService.getPostsByUserAndPageNumber(userId, pageNumber);
+        List<Post> actual = postService.getPostsByUserAndPageNumber(user.getUsername(), pageNumber);
 
         //Assert
         assertEquals(expected,actual);
@@ -232,7 +231,6 @@ class PostServiceTest {
         Post post21 = new Post(21, Timestamp.from(Instant.now()),"post Description", "post Image URL", "youtube URL",
                 user);
 
-        Integer userId = 1;
         /*Initially set to display 5 posts at a time, will later be changed to 20,
         so page number will need to be set to 2 for this test (21-40)*/
         Integer pageNumber = 5;
@@ -262,11 +260,11 @@ class PostServiceTest {
 
         List<Post> expected = new ArrayList<>();
         expected.add(post21);
-        Mockito.when(userDao.findById(userId)).thenReturn(Optional.of(user));
+        Mockito.when(userDao.findUserByUsername(user.getUsername())).thenReturn(user);
         Mockito.when(postDao.findPostByUserOrderByPostSubmittedDesc(user)).thenReturn(posts);
 
         //Act
-        List<Post> actual = postService.getPostsByUserAndPageNumber(userId, pageNumber);
+        List<Post> actual = postService.getPostsByUserAndPageNumber(user.getUsername(), pageNumber);
 
         //Assert
         assertEquals(expected,actual);
@@ -319,7 +317,6 @@ class PostServiceTest {
         Post post21 = new Post(21, Timestamp.from(Instant.now()),"post Description", "post Image URL", "youtube URL",
                 user);
 
-        Integer userId = 1;
         /*Initially set to display 5 posts at a time, will later be changed to 20,
         so page number will need to be set to 3 for this test (41-60)*/
         Integer pageNumber = 6;
@@ -348,11 +345,11 @@ class PostServiceTest {
         posts.add(post21);
 
         List<Post> expected = null;
-        Mockito.when(userDao.findById(userId)).thenReturn(Optional.of(user));
+        Mockito.when(userDao.findUserByUsername(user.getUsername())).thenReturn(user);
         Mockito.when(postDao.findPostByUserOrderByPostSubmittedDesc(user)).thenReturn(posts);
 
         //Act
-        List<Post> actual = postService.getPostsByUserAndPageNumber(userId, pageNumber);
+        List<Post> actual = postService.getPostsByUserAndPageNumber(user.getUsername(), pageNumber);
 
         //Assert
         assertEquals(expected,actual);

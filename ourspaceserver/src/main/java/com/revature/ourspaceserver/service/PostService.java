@@ -58,8 +58,8 @@ public class PostService {
     }
 
     //For user profile page, to display a set number of posts, belonging to the user, by page number
-    public List<Post> getPostsByUserAndPageNumber(Integer userId, Integer pageNumber) {
-        User user = this.userDao.findById(userId).orElse(null);
+    public List<Post> getPostsByUserAndPageNumber(String username, Integer pageNumber) {
+        User user = this.userDao.findUserByUsername(username);
         if(user != null) {
             Integer postsToDisplay = 5;
             List<Post> posts = this.postDao.findPostByUserOrderByPostSubmittedDesc(user);
