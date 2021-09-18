@@ -45,6 +45,7 @@ public class PostService {
         return null;
     }
 
+    //For dashboard page, to display a set number of posts based on the page number
     public List<Post> getPostsByPageNumber(Integer pageNumber) {
         Integer postsToDisplay = 5;
         Long totalNumberOfPosts = this.postDao.count();
@@ -56,17 +57,21 @@ public class PostService {
         return posts;
     }
 
-    public List<Post> getPostsByUserAndPageNumber(Integer userId, Integer pageNumber) {
-        User user = this.userDao.findById(userId).orElse(null);
+    //For user profile page, to display a set number of posts, belonging to the user, by page number
+    public List<Post> getPostsByUserAndPageNumber(String username, Integer pageNumber) {
+        User user = this.userDao.findUserByUsername(username);
         if(user != null) {
             Integer postsToDisplay = 5;
-            Long totalNumberOfPosts = this.postDao.count();
-            Long postEnd = ((totalNumberOfPosts + 1) - ((pageNumber - 1) * postsToDisplay));
-            Long postStart = ((totalNumberOfPosts - postsToDisplay) - ((pageNumber - 1) * postsToDisplay));
-            List<Post> posts = this.postDao.
-                    retrievePostByUserAndPageNumberOrderByPostSubmittedDesc(
-                            user, postStart.intValue(), postEnd.intValue());
-            return posts;
+            List<Post> posts = this.postDao.findPostByUserOrderByPostSubmittedDesc(user);
+            Integer fromIndex = (0 + (postsToDisplay * (pageNumber - 1)));
+            Integer toIndex = (5 + (postsToDisplay * (pageNumber - 1)));
+
+            //If the starting index goes over the number of posts belonging to the user, then return null
+            if(posts.size() < fromIndex) return null;
+            //If the end index goes over the number of posts, then set the end index to the number of the user's posts
+            if(posts.size() < toIndex) toIndex = posts.size();
+            List<Post> postsByPage = posts.subList(fromIndex, toIndex);
+            return postsByPage;
         }
         return null;
     }

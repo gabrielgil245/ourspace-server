@@ -35,10 +35,8 @@ public class PostController {
         return this.postService.getPostsByPageNumber(pageNumber);
     }
 
-    //Would like pageNumber to be a RequestParam (Query) instead
-    // Encountering an IllegalStateException for having a PathParam and Query together
-    @GetMapping("post/{userId}/{pageNumber}")
-    public List<Post> getPostsByPageNumber(@PathVariable Integer userId, @PathVariable Integer pageNumber) {
-        return this.postService.getPostsByUserAndPageNumber(userId, pageNumber);
+    @GetMapping("post/{username}/{pageNumber}")
+    public List<Post> getPostsByUserAndPageNumber(@PathVariable String username, @PathVariable Integer pageNumber) {
+        return this.postService.getPostsByUserAndPageNumber(username, pageNumber);
     }
 }
