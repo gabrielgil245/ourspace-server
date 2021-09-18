@@ -26,4 +26,10 @@ public class CommentController {
     public JsonResponse createComment(@RequestBody Comment comment) {
         return new JsonResponse(true, "Comment successfully created", this.commentService.createComment(comment));
     }
+
+    @GetMapping("comment/{postId}")
+    public JsonResponse getCommentsByPostId(@PathVariable Integer postId) {
+        return new JsonResponse(true, "Listing comments belonging to a post",
+                this.commentService.getCommentBasedOnPostId(postId));
+    }
 }

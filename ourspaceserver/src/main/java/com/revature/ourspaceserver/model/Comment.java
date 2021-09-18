@@ -23,7 +23,7 @@ public class Comment {
     @ManyToOne(cascade = CascadeType.ALL)
     private Post post;
     @Column(name="comment_descr", nullable = false)
-    private String commentDescr;
+    private String commentDescription;
     @CreationTimestamp
     @Column(name="comment_submitted", nullable = false)
     private Timestamp commentSubmitted;

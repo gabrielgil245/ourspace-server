@@ -10,6 +10,7 @@ import com.revature.ourspaceserver.repository.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("commentService")
@@ -35,5 +36,13 @@ public class CommentService {
         Post post = this.postDao.findById(comment.getPost().getPostId()).orElse(null);
         comment.setPost(post);
         return this.commentDao.save(comment);
+    }
+
+    public List<Comment> getCommentBasedOnPostId(Integer postId) {
+        List<Comment> comments = new ArrayList<>();
+        Post post = this.postDao.findById(postId).orElse(null);
+        if(post == null) return null;
+        comments = this.commentDao.findCommentByPost(post);
+        return comments;
     }
 }
