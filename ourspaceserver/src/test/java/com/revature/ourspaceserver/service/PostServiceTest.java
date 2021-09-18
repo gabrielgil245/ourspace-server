@@ -93,16 +93,52 @@ class PostServiceTest {
 
     @Test
     void getPostsByPageNumberTest(){ //when test was made, pagination was set to 5 posts per page, that value may change
+        Integer pageNumber = 1;
         List<Post> expected = new ArrayList<>();
         User user = new User(1,"test","password","service","tests","test@test.com",Date.from(Instant.now()), "description", "profile Pic URL");
         User user2 = new User(2,"test2","password2","service2","tests2","test2@test.com", Date.from(Instant.now()), "description", "profile Pic URL");
-        Post post3 = new Post(3, Timestamp.from(Instant.now()),"post Description", "post Image URL", "youtube URL", user);
+        Post post1 = new Post(1, Timestamp.from(Instant.now()),"post Description", "post Image URL", "youtube URL", user);
         Post post2 = new Post(2, Timestamp.from(Instant.now()),"post Description2", "post Image URL2", "youtube URL2", user2);
+        expected.add(post1);
         expected.add(post2);
-        expected.add(post3);
-        Mockito.when(postDao.count()).thenReturn(6L);
-        Mockito.when(postDao.retrievePostsByOrderByPostSubmittedDesc(2,8)).thenReturn(expected);
-        List<Post> actual = this.postService.getPostsByPageNumber(1);
+
+        Long totalNumOfPosts = new Long(expected.size());
+        Mockito.when(postDao.count()).thenReturn(totalNumOfPosts);
+        //postsToDisplay = 5 (Will later be changed to 20)
+        //postIdEnd = ((totalNumOfPosts + 1) - ((pageNumber - 1) * postsToDisplay))
+        //postIdStart = ((totalNumOfPosts - postsToDisplay) - ((pageNumber - 1) * postsToDisplay))
+        //At postsToDisplay = 5 (-3, 3); At postsToDisplay = 20 (-18, 3)
+        Mockito.when(postDao.retrievePostsByOrderByPostSubmittedDesc(-3,3)).thenReturn(expected);
+
+        List<Post> actual = this.postService.getPostsByPageNumber(pageNumber);
+
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    void getPostsByPageNumberTestWhenListIsNull(){ //when test was made, pagination was set to 5 posts per page, that
+        // value may
+        // change
+        Integer pageNumber = 2;
+        List<Post> posts = new ArrayList<>();
+        User user = new User(1,"test","password","service","tests","test@test.com",Date.from(Instant.now()), "description", "profile Pic URL");
+        User user2 = new User(2,"test2","password2","service2","tests2","test2@test.com", Date.from(Instant.now()), "description", "profile Pic URL");
+        Post post1 = new Post(1, Timestamp.from(Instant.now()),"post Description", "post Image URL", "youtube URL", user);
+        Post post2 = new Post(2, Timestamp.from(Instant.now()),"post Description2", "post Image URL2", "youtube URL2", user2);
+        posts.add(post1);
+        posts.add(post2);
+
+        Long totalNumOfPosts = new Long(posts.size());
+        List<Post> expected = null;
+        Mockito.when(postDao.count()).thenReturn(totalNumOfPosts);
+        //postsToDisplay = 5 (Will later be changed to 20)
+        //postIdEnd = ((totalNumOfPosts + 1) - ((pageNumber - 1) * postsToDisplay))
+        //postIdStart = ((totalNumOfPosts - postsToDisplay) - ((pageNumber - 1) * postsToDisplay))
+        //At postsToDisplay = 5 (-8, -2); At postsToDisplay = 20 (-38, -17)
+        Mockito.when(postDao.retrievePostsByOrderByPostSubmittedDesc(-8,-2)).thenReturn(expected);
+
+        List<Post> actual = this.postService.getPostsByPageNumber(pageNumber);
+
         assertEquals(expected,actual);
     }
 
