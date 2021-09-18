@@ -27,10 +27,9 @@ public class S3Controller {
         JsonResponse jsonResponse;
         String fileName = file.getOriginalFilename();
         byte[] fileBytes = file.getBytes();
-
         this.s3Service.uploadProfilePic(fileBytes,fileName);
-        jsonResponse = new JsonResponse(true,"success", null);
-        return jsonResponse;
+        return new JsonResponse(true,"success", null);
+
     }
 
     @PostMapping("post")
@@ -38,9 +37,7 @@ public class S3Controller {
         JsonResponse jsonResponse;
         String fileName = file.getOriginalFilename();
         byte[] fileBytes = file.getBytes();
-
         this.s3Service.uploadPostPic(fileBytes, fileName);
-        jsonResponse = new JsonResponse(true, "success", null);
-        return jsonResponse;
+        return new JsonResponse(true, "success", null);
     }
 }
