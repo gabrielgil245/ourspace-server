@@ -89,9 +89,6 @@ public class BCryptTest extends TestCase {
      * Entry point for unit tests
      * @param args unused
      */
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(BCryptTest.class);
-    }
 
     /**
      * Test method for 'BCrypt.hashpw(String, String)'

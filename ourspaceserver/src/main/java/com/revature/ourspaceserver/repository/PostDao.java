@@ -22,11 +22,6 @@ public interface PostDao extends JpaRepository<Post, Integer> {
             @Param("postIdStart") Integer postIdStart,
             @Param("postIdEnd") Integer postIdEnd);
 
-    //Filters the number of posts in another user's feed based on the page number
-    @Query("From Post where user = :user and postId > :postIdStart and postId < :postIdEnd order by postSubmitted desc")
-    List<Post> retrievePostByUserAndPageNumberOrderByPostSubmittedDesc(
-            @Param("user") User user,
-            @Param("postIdStart") Integer postIdStart,
-            @Param("postIdEnd") Integer postIdEnd);
+    List<Post> findPostByUserOrderByPostSubmittedDesc(User user);
 
 }
