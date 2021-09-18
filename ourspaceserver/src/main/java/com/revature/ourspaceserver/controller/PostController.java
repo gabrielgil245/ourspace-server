@@ -19,10 +19,6 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("post")
-    public JsonResponse getAllPosts() {
-        return new JsonResponse(true, "listing all posts", this.postService.getAllPosts());
-    }
 
     @PostMapping("post")
     public JsonResponse createPost(@RequestBody Post post) {

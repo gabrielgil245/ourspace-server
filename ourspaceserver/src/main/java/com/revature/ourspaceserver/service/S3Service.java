@@ -30,13 +30,17 @@ public class S3Service {
     }
 
     public void uploadProfilePic(byte[] bytes, String fileName) throws IOException {
-        AmazonS3 s3Client = initialize();
-        String bucketName = this.bucketName + "/profilepics";
-        InputStream targetStream = new ByteArrayInputStream(bytes);
-        ObjectMetadata objectMetadata = new ObjectMetadata();
-        objectMetadata.setContentLength(bytes.length);
-        PutObjectRequest objectRequest = new PutObjectRequest(bucketName,fileName,targetStream,objectMetadata);
-        s3Client.putObject(objectRequest);
+        try {
+            AmazonS3 s3Client = initialize();
+            String bucketName = this.bucketName + "/profilepics";
+            InputStream targetStream = new ByteArrayInputStream(bytes);
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentLength(bytes.length);
+            PutObjectRequest objectRequest = new PutObjectRequest(bucketName, fileName, targetStream, objectMetadata);
+            s3Client.putObject(objectRequest);
+        } catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     public void uploadPostPic(byte[] bytes, String fileName) throws IOException {
