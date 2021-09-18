@@ -130,10 +130,13 @@ public class UserController {
     public JsonResponse editUser(HttpSession session, @RequestBody User user) {
         JsonResponse jsonResponse;
 
+        System.out.println("USER FROM CLIENT");
+        System.out.println(user);
         User tempUser = (User) session.getAttribute("userInSession");
         if(tempUser == null)
             return null;
 
+        System.out.println(tempUser);
         //Edit the editable fields
         tempUser.setAboutMe(user.getAboutMe());
         tempUser.setBirthday(user.getBirthday());
@@ -142,9 +145,10 @@ public class UserController {
         tempUser.setProfilePic(user.getProfilePic());
 
         User currentUser = this.userService.editUser(tempUser);
+        System.out.println(currentUser);
         if (currentUser != null) {
             // Send email for successful registration
-            EmailUtility.sendEmail(currentUser.getEmail(), currentUser.getUsername(), "update");
+            // EmailUtility.sendEmail(currentUser.getEmail(), currentUser.getUsername(), "update");
             jsonResponse = new JsonResponse(true, "Profile was successfully updated.", currentUser);
         } else {
             jsonResponse = new JsonResponse(false, "Error occurred during the profile update.", null);

@@ -33,8 +33,8 @@ public class EmailUtility {
                         "Click the link to login: " + link;
             } else if (status == "update") {
                 subject = "RevaSoNet - Update Profile Confirmation";
-                body = "Hi " + userName.toUpperCase() + ",\n\n This is to confirm that you are trying to change your password. \n\n" +
-                        "Click the link to proceed: " + link + "/edit-profile/" + userName;
+                body = "Hi " + userName.toUpperCase() + ",\n\n This is to confirm that you have successfully updated your profile \n\n" +
+                        "Click the link to view your profile: " + link + "/view-profile/" + userName;
             }
 
             Properties props = new Properties();
