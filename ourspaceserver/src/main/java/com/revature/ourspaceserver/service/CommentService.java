@@ -32,8 +32,11 @@ public class CommentService {
 
     public Comment createComment(Comment comment) {
         User user = this.userDao.findById(comment.getUser().getUserId()).orElse(null);
-        comment.setUser(user);
         Post post = this.postDao.findById(comment.getPost().getPostId()).orElse(null);
+        if(user == null || post == null) {
+            return null;
+        }
+        comment.setUser(user);
         comment.setPost(post);
         return this.commentDao.save(comment);
     }
