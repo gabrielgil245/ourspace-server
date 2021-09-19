@@ -47,7 +47,7 @@ public class PostService {
 
     //For dashboard page, to display a set number of posts based on the page number
     public List<Post> getPostsByPageNumber(Integer pageNumber) {
-        Integer postsToDisplay = 5;
+        Integer postsToDisplay = 20;
         Long totalNumberOfPosts = this.postDao.count();
         Long postEnd = ((totalNumberOfPosts + 1) - ((pageNumber - 1) * postsToDisplay));
         Long postStart = ((totalNumberOfPosts - postsToDisplay)  - ((pageNumber - 1) * postsToDisplay));
@@ -61,10 +61,10 @@ public class PostService {
     public List<Post> getPostsByUserAndPageNumber(String username, Integer pageNumber) {
         User user = this.userDao.findUserByUsername(username);
         if(user != null) {
-            Integer postsToDisplay = 5;
+            Integer postsToDisplay = 20;
             List<Post> posts = this.postDao.findPostByUserOrderByPostSubmittedDesc(user);
             Integer fromIndex = (0 + (postsToDisplay * (pageNumber - 1)));
-            Integer toIndex = (5 + (postsToDisplay * (pageNumber - 1)));
+            Integer toIndex = (20 + (postsToDisplay * (pageNumber - 1)));
 
             //If the starting index goes over the number of posts belonging to the user, then return null
             if(posts.size() < fromIndex) return null;
