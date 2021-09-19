@@ -108,7 +108,7 @@ class PostServiceTest {
         //postIdEnd = ((totalNumOfPosts + 1) - ((pageNumber - 1) * postsToDisplay))
         //postIdStart = ((totalNumOfPosts - postsToDisplay) - ((pageNumber - 1) * postsToDisplay))
         //At postsToDisplay = 5 (-3, 3); At postsToDisplay = 20 (-18, 3)
-        Mockito.when(postDao.retrievePostsByOrderByPostSubmittedDesc(-3,3)).thenReturn(expected);
+        Mockito.when(postDao.retrievePostsByOrderByPostSubmittedDesc(-18,3)).thenReturn(expected);
 
         List<Post> actual = this.postService.getPostsByPageNumber(pageNumber);
 
@@ -135,7 +135,7 @@ class PostServiceTest {
         //postIdEnd = ((totalNumOfPosts + 1) - ((pageNumber - 1) * postsToDisplay))
         //postIdStart = ((totalNumOfPosts - postsToDisplay) - ((pageNumber - 1) * postsToDisplay))
         //At postsToDisplay = 5 (-8, -2); At postsToDisplay = 20 (-38, -17)
-        Mockito.when(postDao.retrievePostsByOrderByPostSubmittedDesc(-8,-2)).thenReturn(expected);
+        Mockito.when(postDao.retrievePostsByOrderByPostSubmittedDesc(-38,-17)).thenReturn(expected);
 
         List<Post> actual = this.postService.getPostsByPageNumber(pageNumber);
 
@@ -233,7 +233,7 @@ class PostServiceTest {
 
         /*Initially set to display 5 posts at a time, will later be changed to 20,
         so page number will need to be set to 2 for this test (21-40)*/
-        Integer pageNumber = 5;
+        Integer pageNumber = 2;
 
         List<Post> posts = new ArrayList<>();
         posts.add(post1);
