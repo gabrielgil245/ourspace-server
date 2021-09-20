@@ -4,6 +4,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 h2testing
+env.list
+Dockerfile
 
 ### STS ###
 .apt_generated

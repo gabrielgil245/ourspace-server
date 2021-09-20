@@ -12,7 +12,7 @@ import java.io.IOException;
 
 @RestController("s3Service")
 @RequestMapping(value = "s3")
-@CrossOrigin(value="http://localhost:4200")
+@CrossOrigin(value=CrossOriginUtil.CROSS_ORIGIN_VALUE)
 public class S3Controller {
 
     S3Service s3Service;

@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController("postController")
 @RequestMapping("/api")
-@CrossOrigin(value="http://localhost:4200", allowCredentials = "true")
+@CrossOrigin(value=CrossOriginUtil.CROSS_ORIGIN_VALUE, allowCredentials = "true")
 public class PostController {
     PostService postService;
 

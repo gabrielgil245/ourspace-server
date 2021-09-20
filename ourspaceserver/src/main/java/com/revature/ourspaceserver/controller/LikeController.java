@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController("likeController")
 @RequestMapping("/api")
-@CrossOrigin(value="http://localhost:4200", allowCredentials = "true")
+@CrossOrigin(value=CrossOriginUtil.CROSS_ORIGIN_VALUE, allowCredentials = "true")
 public class LikeController {
     LikeService likeService;
 
