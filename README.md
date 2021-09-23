@@ -63,11 +63,11 @@ Todo-List:
 - HTTP requests may be made via post at "http://localhost:9000" or using the web platform (link is at the top of this file).
 
 ## Contributors
-* Roel Crodua
+### Roel Crodua
   - 
-* Gabriel Gil
+### Gabriel Gil
   - 
-* Jack Gildea
+### Jack Gildea
   - Increased overall test coverage by incorporating Mockito.
   - Utilized JpaRepository to customize data retrieval from the database.
   - Integrated S3 functionality for uploading profile and post images.
