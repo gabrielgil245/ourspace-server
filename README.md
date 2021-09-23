@@ -67,10 +67,11 @@ Todo-List:
   - 
 ### Gabriel Gil
   - Integrated Spring Boot for easier dependency management and testing.
-  - Devised the User, Post, and Comment Entity Models.
-  - Assembled API endpoints with Spring WebMVC.
+  - Devised the User, Post, and Comment Entity Models.  
+  - Developed the services, utilizing Spring's dependency injection.
   - Utilized Spring Data annotations for data querying and manipulation.
   - Developed a set of JPQL commands to retrieve the requested results.
+  - Assembled API endpoints with Spring WebMVC.
   - Utilized backend test coverage with Spring Boot Testing and Mockito to achieve 86% test coverage.
   - Successfully deployed the server side of the application via a docker container.
 ### Jack Gildea
