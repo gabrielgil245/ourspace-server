@@ -14,9 +14,11 @@ OurSpace Social Media Web Platform/Frontend: https://github.com/gabrielgil245/ou
 - S3
 - AWS SDK for Java
 - JavaMail API
+- Postman
 - H2
 - Log4J
 - JavaDocs
+- Postgres
 
 ## Features
 ### Users can:
@@ -45,13 +47,20 @@ Todo-List:
 - Frontend: Deploy web application (web application initially deployed with complications)
 
 ## Getting Started
-- git clone https://github.com/gabrielgil245/ourspace-client.
-- npm install to install this application's packages.
-- The server domain string is set to "http://localhost:9000"; it may be changed under services in the generic.service.ts.
-- HTTP requests are made to a S3 bucket, go to the generic.service.ts to change the values that pertain to your S3 bucket.
+- git clone https://github.com/gabrielgil245/ourspace-server.
+- Create a relational database called "ourspace-server".
+- List of environment variables:
+  - AWS_DATABASE_URI - Relational Database Host Name.
+  - AWS_DATABASE_USERNAME - Database Username.
+  - AWS_DATABASE_PASSWORD - Database Password.
+  - AWS_S3_ID - S3 ID.
+  - AWS_S3_KEY - S3 Key.
+  - AWS_S3_BUCKET - S3 Bucket Name.
+- The CROSS_ORIGIN_VALUE is located in the CrossOriginUtil class; it's set to "http://localhost:4200" but may be changed.
 
 ## Usage
-- [ng serve -o] to build and serve the application at http://localhost:4200.
+- Locate the OurspaceserverApplication class and select the green play button to run the application.
+- HTTP requests may be made via post at "http://localhost:9000" or using the web platform (link is at the top of this file).
 
 ## Contributors
 - Roel Crodua
