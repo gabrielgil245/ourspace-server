@@ -59,14 +59,20 @@ Todo-List:
 - The CROSS_ORIGIN_VALUE is located in the CrossOriginUtil class; it's set to "http://localhost:4200" but may be changed.
 
 ## Usage
-- Locate the OurspaceserverApplication class and select the green play button to run the application.
-- HTTP requests may be made via post at "http://localhost:9000" or using the web platform (link is at the top of this file).
+- Run the application from the OurspaceserverApplication class.
+- HTTP requests may be made to "http://localhost:9000" using the web platform (the link is located at the top of this file).
 
 ## Contributors
 ### Roel Crodua
   - 
 ### Gabriel Gil
-  - 
+  - Integrated Spring Boot for easier dependency management and testing.
+  - Devised the User, Post, and Comment Entity Models.
+  - Assembled API endpoints with Spring WebMVC.
+  - Utilized Spring Data annotations for data querying and manipulation.
+  - Developed a set of JPQL commands to retrieve the requested results.
+  - Utilized backend test coverage with Spring Boot Testing and Mockito to achieve 86% test coverage.
+  - Successfully deployed the server side of the application via a docker container.
 ### Jack Gildea
   - Increased overall test coverage by incorporating Mockito.
   - Utilized JpaRepository to customize data retrieval from the database.
