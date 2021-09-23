@@ -64,11 +64,12 @@ Todo-List:
 
 ## Contributors
 ### Roel Crodua
-  - 
+  - Implemented sending emails during signup, reset-password and forgot password.
+  - Added BCrypt functionality for password hashing.
+  - Increased ovarall test coverage by incorporating Mockito for BCrypt Service testing.
 ### Gabriel Gil
   - Integrated Spring Boot for easier dependency management and testing.
   - Devised the User, Post, and Comment Entity Models.  
-  - Developed the services, utilizing Spring's dependency injection.
   - Utilized Spring Data annotations for data querying and manipulation.
   - Developed a set of JPQL commands to retrieve the requested results.
   - Assembled API endpoints with Spring WebMVC.
